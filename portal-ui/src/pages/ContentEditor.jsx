@@ -27,8 +27,10 @@ export default function ContentEditor({ page, aiAvailable, onBack }) {
     const [uploadFile, setUploadFile] = useState(null);
     const [uploadLoading, setUploadLoading] = useState(false);
     const [previewScale, setPreviewScale] = useState(1);
-    const previewTimerRef = useRef(null);
+    const [previewStale, setPreviewStale] = useState(false);
     const previewWrapRef = useRef(null);
+    const contentRef = useRef(content);
+    const initialPreviewDone = useRef(false);
 
     const DESKTOP_WIDTH = 1280;
 
@@ -49,6 +51,22 @@ export default function ContentEditor({ page, aiAvailable, onBack }) {
         if (previewUrl) updatePreviewScale();
     }, [previewUrl, updatePreviewScale]);
 
+    const fetchPreview = useCallback(async () => {
+        if (!mapping.length || !Object.keys(contentRef.current).length) return;
+        setPreviewLoading(true);
+        setPreviewStale(false);
+        try {
+            const res = await previewPage(page.id, contentRef.current);
+            if (res.url) {
+                const sep = res.url.includes('?') ? '&' : '?';
+                setPreviewUrl(res.url + sep + '_t=' + Date.now());
+            }
+        } catch (err) {
+            console.error('Preview failed:', err);
+        }
+        setPreviewLoading(false);
+    }, [page.id, mapping]);
+
     useEffect(() => {
         (async () => {
             try {
@@ -56,7 +74,9 @@ export default function ContentEditor({ page, aiAvailable, onBack }) {
                     getPageContent(page.id),
                     page.template_type ? getMapping(page.template_type) : Promise.resolve([]),
                 ]);
-                setContent(contentRes.data || {});
+                const loadedContent = contentRes.data || {};
+                setContent(loadedContent);
+                contentRef.current = loadedContent;
                 setSource(contentRes.source || '');
                 setStatus(contentRes.status || '');
                 setMapping(mappingRes);
@@ -67,29 +87,16 @@ export default function ContentEditor({ page, aiAvailable, onBack }) {
         })();
     }, [page.id]);
 
-    // Debounced preview update
+    // Auto-load preview once when content + mapping are first available.
     useEffect(() => {
-        if (!mapping.length || !Object.keys(content).length) return;
-
-        if (previewTimerRef.current) clearTimeout(previewTimerRef.current);
-        previewTimerRef.current = setTimeout(async () => {
-            setPreviewLoading(true);
-            try {
-                const res = await previewPage(page.id, content);
-                if (res.url) {
-                    const sep = res.url.includes('?') ? '&' : '?';
-                    setPreviewUrl(res.url + sep + '_t=' + Date.now());
-                }
-            } catch (err) {
-                console.error('Preview failed:', err);
-            }
-            setPreviewLoading(false);
-        }, 1000);
-
-        return () => {
-            if (previewTimerRef.current) clearTimeout(previewTimerRef.current);
-        };
-    }, [content, mapping]);
+        contentRef.current = content;
+        if (!initialPreviewDone.current && mapping.length && Object.keys(content).length) {
+            initialPreviewDone.current = true;
+            fetchPreview();
+        } else if (initialPreviewDone.current) {
+            setPreviewStale(true);
+        }
+    }, [content, mapping, fetchPreview]);
 
     const getContentFields = () => {
         const seen = new Set();
@@ -301,11 +308,18 @@ export default function ContentEditor({ page, aiAvailable, onBack }) {
                             </button>
                         </div>
                         <div className="portal-preview-panel">
-                            {previewLoading && (
-                                <div className="portal-preview-loading">
-                                    <span className="portal-spinner"></span> Updating preview...
-                                </div>
-                            )}
+                            <div className="portal-preview-toolbar">
+                                <button
+                                    className="portal-btn portal-btn-secondary portal-btn-sm"
+                                    onClick={fetchPreview}
+                                    disabled={previewLoading || !Object.keys(content).length}
+                                >
+                                    {previewLoading ? 'Updating...' : 'Refresh Preview'}
+                                </button>
+                                {previewStale && !previewLoading && (
+                                    <span className="portal-preview-stale">Content changed — click to refresh</span>
+                                )}
+                            </div>
                             {previewUrl ? (
                                 <div ref={previewWrapRef} className="portal-preview-iframe-wrap">
                                     <iframe
