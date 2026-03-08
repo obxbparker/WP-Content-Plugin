@@ -432,12 +432,20 @@ h2 { font-size: 22px; font-weight: 600; margin-bottom: 8px; }
     overflow: hidden;
 }
 
-.portal-preview-iframe {
+.portal-preview-iframe-wrap {
     width: 100%;
+    overflow: hidden;
+    min-height: 500px;
+    height: calc(100vh - 110px);
+}
+
+.portal-preview-iframe {
+    width: 1280px;
     min-height: 500px;
     height: calc(100vh - 110px);
     border: none;
     display: block;
+    transform-origin: 0 0;
 }
 
 .portal-preview-loading {
@@ -506,6 +514,7 @@ h2 { font-size: 22px; font-weight: 600; margin-bottom: 8px; }
 @media (max-width: 782px) {
     .portal-write-tab { grid-template-columns: 1fr; }
     .portal-preview-panel { position: static; max-height: none; }
+    .portal-preview-iframe-wrap { height: 400px; }
     .portal-preview-iframe { height: 400px; }
     .portal-header { flex-direction: column; height: auto; padding: 12px 20px; gap: 8px; }
     .portal-nav { width: 100%; justify-content: center; }

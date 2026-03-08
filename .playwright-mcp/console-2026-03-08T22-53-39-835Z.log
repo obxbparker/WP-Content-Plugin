@@ -1,0 +1,12 @@
+[   35064ms] ReferenceError: elementorFrontendConfig is not defined
+    at 8309 (https://bpcontenttedev.wpenginepowered.com/wp-content/plugins/elementor/assets/js/frontend.min.js?ver=3.35.5:1:25843)
+    at __webpack_require__ (https://bpcontenttedev.wpenginepowered.com/wp-content/plugins/elementor/assets/js/webpack.runtime.min.js?ver=3.35.5:1:154)
+    at 7603 (https://bpcontenttedev.wpenginepowered.com/wp-content/plugins/elementor/assets/js/frontend.min.js?ver=3.35.5:1:19822)
+    at __webpack_require__ (https://bpcontenttedev.wpenginepowered.com/wp-content/plugins/elementor/assets/js/webpack.runtime.min.js?ver=3.35.5:1:154)
+    at https://bpcontenttedev.wpenginepowered.com/wp-content/plugins/elementor/assets/js/frontend.min.js?ver=3.35.5:1:31855
+    at __webpack_require__.O (https://bpcontenttedev.wpenginepowered.com/wp-content/plugins/elementor/assets/js/webpack.runtime.min.js?ver=3.35.5:1:512)
+    at https://bpcontenttedev.wpenginepowered.com/wp-content/plugins/elementor/assets/js/frontend.min.js?ver=3.35.5:1:31874
+    at webpackJsonpCallback (https://bpcontenttedev.wpenginepowered.com/wp-content/plugins/elementor/assets/js/webpack.runtime.min.js?ver=3.35.5:1:5354)
+    at https://bpcontenttedev.wpenginepowered.com/wp-content/plugins/elementor/assets/js/frontend.min.js?ver=3.35.5:1:90
+[   35146ms] TypeError: Cannot read properties of null (reading 'querySelector')
+    at HTMLDocument.<anonymous> (https://bpcontenttedev.wpenginepowered.com/wp-content/themes/astra-child/scripts.js?ver=1.0.0:34:36)

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import {
     getPageContent,
     savePageContent,
@@ -26,7 +26,28 @@ export default function ContentEditor({ page, aiAvailable, onBack }) {
     const [showAIModal, setShowAIModal] = useState(false);
     const [uploadFile, setUploadFile] = useState(null);
     const [uploadLoading, setUploadLoading] = useState(false);
+    const [previewScale, setPreviewScale] = useState(1);
     const previewTimerRef = useRef(null);
+    const previewWrapRef = useRef(null);
+
+    const DESKTOP_WIDTH = 1280;
+
+    const updatePreviewScale = useCallback(() => {
+        if (previewWrapRef.current) {
+            const w = previewWrapRef.current.offsetWidth;
+            setPreviewScale(Math.min(1, w / DESKTOP_WIDTH));
+        }
+    }, []);
+
+    useEffect(() => {
+        updatePreviewScale();
+        window.addEventListener('resize', updatePreviewScale);
+        return () => window.removeEventListener('resize', updatePreviewScale);
+    }, [updatePreviewScale]);
+
+    useEffect(() => {
+        if (previewUrl) updatePreviewScale();
+    }, [previewUrl, updatePreviewScale]);
 
     useEffect(() => {
         (async () => {
@@ -286,13 +307,19 @@ export default function ContentEditor({ page, aiAvailable, onBack }) {
                                 </div>
                             )}
                             {previewUrl ? (
-                                <iframe
-                                    src={previewUrl}
-                                    title="Page Preview"
-                                    className="portal-preview-iframe"
-                                />
+                                <div ref={previewWrapRef} className="portal-preview-iframe-wrap">
+                                    <iframe
+                                        src={previewUrl}
+                                        title="Page Preview"
+                                        className="portal-preview-iframe"
+                                        style={{
+                                            transform: `scale(${previewScale})`,
+                                            height: `${100 / previewScale}%`,
+                                        }}
+                                    />
+                                </div>
                             ) : (
-                                <div className="portal-preview-empty">
+                                <div ref={previewWrapRef} className="portal-preview-empty">
                                     <p>Start adding content to see a live preview.</p>
                                 </div>
                             )}
