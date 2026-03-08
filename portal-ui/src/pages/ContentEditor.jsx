@@ -244,6 +244,19 @@ export default function ContentEditor({ page, aiAvailable, onBack }) {
                                             value={content[field.content_field_name] || []}
                                             onChange={(val) => updateField(field.content_field_name, val)}
                                         />
+                                    ) : (field.content_field_name.includes('heading') ||
+                                        field.content_field_name.includes('button') ||
+                                        field.content_field_name.includes('cta')) ? (
+                                        <div className="portal-field">
+                                            <label className="portal-field-label">
+                                                {formatFieldLabel(field.content_field_name)}
+                                            </label>
+                                            <input
+                                                type="text"
+                                                value={content[field.content_field_name] || ''}
+                                                onChange={(e) => updateField(field.content_field_name, e.target.value)}
+                                            />
+                                        </div>
                                     ) : (
                                         <div className="portal-field">
                                             <label className="portal-field-label">
@@ -252,12 +265,7 @@ export default function ContentEditor({ page, aiAvailable, onBack }) {
                                             <textarea
                                                 value={content[field.content_field_name] || ''}
                                                 onChange={(e) => updateField(field.content_field_name, e.target.value)}
-                                                rows={
-                                                    field.content_field_name.includes('heading') ||
-                                                    field.content_field_name.includes('button') ||
-                                                    field.content_field_name.includes('cta')
-                                                        ? 2 : 4
-                                                }
+                                                rows={4}
                                             />
                                         </div>
                                     )}

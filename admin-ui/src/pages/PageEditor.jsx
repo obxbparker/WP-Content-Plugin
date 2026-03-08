@@ -301,6 +301,17 @@ export default function PageEditor({ pageId, onBack }) {
                                                         updateField(field.content_field_name, val)
                                                     }
                                                 />
+                                            ) : (field.content_field_name.includes('heading') ||
+                                                field.content_field_name.includes('button') ||
+                                                field.content_field_name.includes('cta')) ? (
+                                                <TextControl
+                                                    label={formatFieldLabel(field.content_field_name)}
+                                                    value={content[field.content_field_name] || ''}
+                                                    onChange={(val) =>
+                                                        updateField(field.content_field_name, val)
+                                                    }
+                                                    __nextHasNoMarginBottom
+                                                />
                                             ) : (
                                                 <TextareaControl
                                                     label={formatFieldLabel(field.content_field_name)}
@@ -308,13 +319,7 @@ export default function PageEditor({ pageId, onBack }) {
                                                     onChange={(val) =>
                                                         updateField(field.content_field_name, val)
                                                     }
-                                                    rows={
-                                                        field.content_field_name.includes('heading') ||
-                                                        field.content_field_name.includes('button') ||
-                                                        field.content_field_name.includes('cta')
-                                                            ? 2
-                                                            : 4
-                                                    }
+                                                    rows={4}
                                                 />
                                             )}
                                         </div>
