@@ -1,0 +1,435 @@
+/* ContentHub WP Admin Styles */
+
+.contenthub-wp-app {
+    max-width: 1200px;
+    margin: 0;
+}
+
+/* Header & Nav */
+.contenthub-wp-header {
+    margin-bottom: 20px;
+}
+
+.contenthub-wp-header h1 {
+    font-size: 23px;
+    font-weight: 400;
+    margin: 0 0 10px;
+    padding: 9px 0 4px;
+    line-height: 1.3;
+}
+
+.contenthub-wp-nav {
+    display: flex;
+    gap: 0;
+    border-bottom: 1px solid #c3c4c7;
+    margin-bottom: 20px;
+}
+
+.contenthub-wp-nav-tab {
+    background: none;
+    border: 1px solid transparent;
+    border-bottom: none;
+    cursor: pointer;
+    padding: 6px 12px;
+    font-size: 14px;
+    color: #50575e;
+    margin-bottom: -1px;
+    border-radius: 3px 3px 0 0;
+}
+
+.contenthub-wp-nav-tab:hover {
+    color: #135e96;
+}
+
+.contenthub-wp-nav-tab.is-active {
+    background: #fff;
+    border-color: #c3c4c7;
+    color: #1d2327;
+    font-weight: 600;
+}
+
+/* Loading */
+.contenthub-wp-loading {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 20px;
+    color: #757575;
+}
+
+/* Toolbar */
+.contenthub-wp-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.contenthub-wp-toolbar h2 {
+    margin: 0;
+    flex: 1;
+}
+
+/* Dashboard Table */
+.contenthub-wp-dashboard .wp-list-table td {
+    vertical-align: middle;
+}
+
+.contenthub-wp-dashboard .components-select-control {
+    min-width: 160px;
+}
+
+/* Template Setup */
+.contenthub-wp-create-type {
+    display: flex;
+    gap: 8px;
+    align-items: flex-end;
+    margin-bottom: 20px;
+    max-width: 400px;
+}
+
+.contenthub-wp-create-type .components-base-control {
+    flex: 1;
+}
+
+.contenthub-wp-type-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 16px;
+}
+
+.contenthub-wp-type-card .components-card__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.contenthub-wp-type-card .components-card__header h3 {
+    margin: 0;
+}
+
+.contenthub-wp-type-card .components-card__body .components-button {
+    margin-top: 12px;
+}
+
+/* Page Editor */
+.contenthub-wp-editor-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+}
+
+.contenthub-wp-editor-header h2 {
+    margin: 0;
+    flex: 1;
+}
+
+.contenthub-wp-editor-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.contenthub-wp-tab-content {
+    padding: 16px 0;
+}
+
+.contenthub-wp-scrape-form {
+    display: flex;
+    gap: 8px;
+    align-items: flex-end;
+    max-width: 600px;
+}
+
+.contenthub-wp-scrape-form .components-base-control {
+    flex: 1;
+}
+
+.contenthub-wp-field {
+    margin-bottom: 16px;
+}
+
+/* Repeater */
+.contenthub-wp-repeater {
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    padding: 12px;
+    background: #fafafa;
+}
+
+.contenthub-wp-repeater > label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.contenthub-wp-repeater-item {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 3px;
+    padding: 8px 12px;
+    margin-bottom: 8px;
+    position: relative;
+}
+
+.contenthub-wp-repeater-item .components-button.is-destructive {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+}
+
+/* Write Tab Two-Column Layout */
+.contenthub-wp-write-tab {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    align-items: start;
+}
+
+.contenthub-wp-write-fields {
+    min-width: 0;
+}
+
+/* Live Preview Panel */
+.contenthub-wp-preview-panel {
+    position: sticky;
+    top: 46px;
+    max-height: calc(100vh - 60px);
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    background: #fff;
+    overflow: hidden;
+}
+
+.contenthub-wp-preview-iframe-wrap {
+    width: 100%;
+    overflow: hidden;
+    min-height: 600px;
+    height: calc(100vh - 80px);
+}
+
+.contenthub-wp-preview-iframe {
+    width: 1280px;
+    min-height: 600px;
+    height: calc(100vh - 80px);
+    border: none;
+    display: block;
+    transform-origin: 0 0;
+}
+
+.contenthub-wp-preview-loading {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    background: #f0f6fc;
+    border-bottom: 1px solid #c3d1e0;
+    font-size: 12px;
+    color: #2271b1;
+}
+
+.contenthub-wp-preview-empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 400px;
+    color: #a7aaad;
+    font-size: 14px;
+    text-align: center;
+    padding: 24px;
+}
+
+/* Responsive: stack on narrow screens */
+@media (max-width: 782px) {
+    .contenthub-wp-write-tab {
+        grid-template-columns: 1fr;
+    }
+
+    .contenthub-wp-preview-panel {
+        position: static;
+        max-height: none;
+    }
+
+    .contenthub-wp-preview-iframe {
+        height: 500px;
+    }
+}
+
+/* Share Link Section */
+.contenthub-wp-share-section {
+    margin-bottom: 20px;
+    padding: 12px 16px;
+    background: #f6f7f7;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+}
+
+.contenthub-wp-share-url-row {
+    display: flex;
+    gap: 8px;
+    align-items: flex-end;
+}
+
+.contenthub-wp-share-url-row .components-base-control {
+    flex: 1;
+}
+
+.contenthub-wp-share-url-row .components-text-control__input {
+    font-size: 12px;
+    color: #50575e;
+    background: #fff;
+}
+
+.contenthub-wp-share-hint {
+    margin: 8px 0 0;
+    font-size: 12px;
+    color: #757575;
+}
+
+/* Business Profile Steps */
+.contenthub-wp-steps {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 20px;
+}
+
+.contenthub-wp-step {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border: 1px solid #c3c4c7;
+    border-radius: 4px;
+    background: #fff;
+    cursor: pointer;
+    font-size: 13px;
+    color: #50575e;
+}
+
+.contenthub-wp-step.is-active {
+    background: #2271b1;
+    border-color: #2271b1;
+    color: #fff;
+}
+
+.contenthub-wp-step.is-completed {
+    border-color: #00a32a;
+    color: #00a32a;
+}
+
+.contenthub-wp-step-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #e0e0e0;
+    font-size: 11px;
+    font-weight: 600;
+    color: #50575e;
+}
+
+.contenthub-wp-step.is-active .contenthub-wp-step-number {
+    background: rgba(255, 255, 255, 0.3);
+    color: #fff;
+}
+
+.contenthub-wp-step.is-completed .contenthub-wp-step-number {
+    background: #00a32a;
+    color: #fff;
+}
+
+.contenthub-wp-step-nav {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+    margin-top: 16px;
+}
+
+/* Mapping Editor */
+.contenthub-wp-mapping-editor .wp-list-table td {
+    vertical-align: middle;
+}
+
+.contenthub-wp-mapping-editor code {
+    font-size: 11px;
+    padding: 2px 4px;
+    background: #f0f0f0;
+    border-radius: 2px;
+}
+
+.contenthub-wp-mapping-preview {
+    color: #757575;
+    font-size: 12px;
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* AI Generate Modal */
+.contenthub-wp-ai-modal .components-modal__content {
+    max-width: 600px;
+}
+
+.contenthub-wp-ai-modal-body {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.contenthub-wp-ai-modal-intro {
+    color: #757575;
+    margin: 0;
+}
+
+.contenthub-wp-ai-modal-upload {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.contenthub-wp-ai-modal-upload-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.contenthub-wp-ai-modal-filename {
+    color: #2271b1;
+    font-size: 13px;
+}
+
+.contenthub-wp-ai-modal-hint {
+    color: #757575;
+    font-size: 12px;
+    margin: 0;
+}
+
+.contenthub-wp-ai-modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 8px;
+    padding-top: 16px;
+    border-top: 1px solid #e0e0e0;
+}
+
+/* Upload Tab */
+.contenthub-wp-upload-tab {
+    padding: 16px 0;
+}
+
+.contenthub-wp-upload-form {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 12px;
+}
+
+/* Settings */
+.contenthub-wp-settings .components-card {
+    max-width: 700px;
+}
