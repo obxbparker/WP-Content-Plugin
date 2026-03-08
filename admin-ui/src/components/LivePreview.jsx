@@ -38,7 +38,9 @@ export default function LivePreview({ pageId, content, mapping }) {
             try {
                 const res = await previewPage(pageId, content);
                 if (res.url) {
-                    setPreviewUrl(res.url);
+                    // Add cache-buster to force iframe reload.
+                    const sep = res.url.includes('?') ? '&' : '?';
+                    setPreviewUrl(res.url + sep + '_t=' + Date.now());
                 }
             } catch (err) {
                 console.error('Preview failed:', err);

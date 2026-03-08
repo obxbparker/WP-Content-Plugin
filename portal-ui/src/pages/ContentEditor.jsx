@@ -55,7 +55,10 @@ export default function ContentEditor({ page, aiAvailable, onBack }) {
             setPreviewLoading(true);
             try {
                 const res = await previewPage(page.id, content);
-                if (res.url) setPreviewUrl(res.url);
+                if (res.url) {
+                    const sep = res.url.includes('?') ? '&' : '?';
+                    setPreviewUrl(res.url + sep + '_t=' + Date.now());
+                }
             } catch (err) {
                 console.error('Preview failed:', err);
             }

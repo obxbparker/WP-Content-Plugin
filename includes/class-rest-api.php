@@ -347,12 +347,62 @@ class ContentHub_REST_API {
         $raw = get_post_meta( $page_id, '_contenthub_content_data', true );
         $data = ! empty( $raw ) ? json_decode( $raw, true ) : null;
 
+        // If no saved content, pre-populate from the Elementor template's current values.
+        if ( null === $data ) {
+            $data = $this->get_template_defaults( $page_id );
+        }
+
         return new WP_REST_Response( [
             'page_id' => $page_id,
             'data'    => $data,
             'source'  => get_post_meta( $page_id, '_contenthub_content_source', true ),
             'status'  => get_post_meta( $page_id, '_contenthub_content_status', true ),
         ], 200 );
+    }
+
+    /**
+     * Extract default content values from the Elementor template via blueprint + mapping.
+     */
+    private function get_template_defaults( int $page_id ): ?array {
+        $template_slug = ContentHub_Page_Discovery::instance()->get_template_type( $page_id );
+        if ( empty( $template_slug ) ) {
+            return null;
+        }
+
+        $registry    = ContentHub_Template_Registry::instance();
+        $template    = $registry->get( $template_slug );
+        $template_id = (int) ( $template['elementor_template_id'] ?? 0 );
+        if ( ! $template_id ) {
+            return null;
+        }
+
+        $parser    = ContentHub_Elementor_Parser::instance();
+        $blueprint = $parser->build_blueprint( $template_id );
+        $mapper    = ContentHub_Template_Mapper::instance();
+        $mapping   = $mapper->get_mapping( $template_slug );
+
+        if ( empty( $blueprint ) || empty( $mapping ) ) {
+            return null;
+        }
+
+        // Build a lookup from slot_id+field to current_value.
+        $slot_values = [];
+        foreach ( $blueprint as $slot ) {
+            $key = $slot['slot_id'] . ':' . $slot['field'];
+            $slot_values[ $key ] = $slot['current_value'] ?? '';
+        }
+
+        // Map current values to content field names.
+        $defaults = [];
+        foreach ( $mapping as $entry ) {
+            $key = $entry['slot_id'] . ':' . $entry['field'];
+            $field_name = $entry['content_field_name'];
+            if ( isset( $slot_values[ $key ] ) && ! isset( $defaults[ $field_name ] ) ) {
+                $defaults[ $field_name ] = $slot_values[ $key ];
+            }
+        }
+
+        return ! empty( $defaults ) ? $defaults : null;
     }
 
     public function save_page_content( WP_REST_Request $request ): WP_REST_Response {
