@@ -603,6 +603,7 @@ class ContentHub_REST_API {
         $url   = add_query_arg( [
             'contenthub_preview' => $page_id,
             '_nonce'             => $nonce,
+            '_ts'                => time(),
         ], home_url( '/' ) );
 
         return new WP_REST_Response( [ 'url' => $url ], 200 );
@@ -984,6 +985,7 @@ class ContentHub_REST_API {
             'contenthub_portal_preview' => $page_id,
             '_sig'                      => $sig,
             '_th'                       => $token_hash,
+            '_ts'                       => time(),
         ], home_url( '/' ) );
 
         return new WP_REST_Response( [ 'url' => $url ], 200 );

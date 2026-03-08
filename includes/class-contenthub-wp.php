@@ -187,6 +187,9 @@ class ContentHub_WP {
         wp_footer();
         $footer = ob_get_clean();
 
+        // Prevent page caching (WP Engine Varnish, etc.).
+        nocache_headers();
+
         echo '<!DOCTYPE html><html ' . get_language_attributes() . '>';
         echo '<head><meta charset="' . get_bloginfo( 'charset' ) . '">';
         echo '<meta name="viewport" content="width=1280">';
@@ -295,6 +298,9 @@ class ContentHub_WP {
         ob_start();
         wp_footer();
         $footer = ob_get_clean();
+
+        // Prevent page caching (WP Engine Varnish, etc.).
+        nocache_headers();
 
         echo '<!DOCTYPE html><html ' . get_language_attributes() . '>';
         echo '<head><meta charset="' . get_bloginfo( 'charset' ) . '">';
