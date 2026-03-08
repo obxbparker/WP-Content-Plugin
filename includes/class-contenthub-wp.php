@@ -189,7 +189,8 @@ class ContentHub_WP {
 
         echo '<!DOCTYPE html><html ' . get_language_attributes() . '>';
         echo '<head><meta charset="' . get_bloginfo( 'charset' ) . '">';
-        echo '<meta name="viewport" content="width=device-width, initial-scale=1">';
+        echo '<meta name="viewport" content="width=1280">';
+        echo '<style>html,body{margin:0!important;padding:0!important;}#wpadminbar{display:none!important;}</style>';
         echo $head;
         echo '</head><body class="elementor-page elementor-default">';
         echo $builder_content;
@@ -209,11 +210,12 @@ class ContentHub_WP {
         }
 
         $page_id    = absint( $_GET['contenthub_portal_preview'] );
-        $nonce      = isset( $_GET['_nonce'] ) ? sanitize_text_field( wp_unslash( $_GET['_nonce'] ) ) : '';
+        $sig        = isset( $_GET['_sig'] ) ? sanitize_text_field( wp_unslash( $_GET['_sig'] ) ) : '';
         $token_hash = isset( $_GET['_th'] ) ? sanitize_text_field( wp_unslash( $_GET['_th'] ) ) : '';
 
-        // Verify nonce (portal nonces are short-lived, created server-side).
-        if ( ! wp_verify_nonce( $nonce, "contenthub_portal_preview_{$page_id}" ) ) {
+        // Verify HMAC signature (nonces don't work for anonymous portal users).
+        $expected = hash_hmac( 'sha256', "{$page_id}:{$token_hash}", wp_salt( 'nonce' ) );
+        if ( ! hash_equals( $expected, $sig ) ) {
             wp_die( 'Invalid or expired preview link.', 'Preview Error', [ 'response' => 403 ] );
         }
 
@@ -296,7 +298,8 @@ class ContentHub_WP {
 
         echo '<!DOCTYPE html><html ' . get_language_attributes() . '>';
         echo '<head><meta charset="' . get_bloginfo( 'charset' ) . '">';
-        echo '<meta name="viewport" content="width=device-width, initial-scale=1">';
+        echo '<meta name="viewport" content="width=1280">';
+        echo '<style>html,body{margin:0!important;padding:0!important;}#wpadminbar{display:none!important;}</style>';
         echo $head;
         echo '</head><body class="elementor-page elementor-default">';
         echo $builder_content;

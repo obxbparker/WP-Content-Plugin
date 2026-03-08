@@ -929,10 +929,10 @@ class ContentHub_REST_API {
         $transient_key = "contenthub_preview_{$page_id}_portal_{$token_hash}";
         set_transient( $transient_key, wp_json_encode( $content ), 300 );
 
-        $nonce = wp_create_nonce( "contenthub_portal_preview_{$page_id}" );
-        $url   = add_query_arg( [
+        $sig = hash_hmac( 'sha256', "{$page_id}:{$token_hash}", wp_salt( 'nonce' ) );
+        $url = add_query_arg( [
             'contenthub_portal_preview' => $page_id,
-            '_nonce'                    => $nonce,
+            '_sig'                      => $sig,
             '_th'                       => $token_hash,
         ], home_url( '/' ) );
 

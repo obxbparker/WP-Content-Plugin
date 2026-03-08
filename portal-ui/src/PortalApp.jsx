@@ -26,7 +26,7 @@ export default function PortalApp() {
 
     const siteName = portalConfig?.site_name || config.siteName || 'ContentHub';
     const siteIconUrl = portalConfig?.site_icon_url || config.siteIconUrl || '';
-    const aiAvailable = portalConfig?.ai_available || false;
+    const aiAvailable = portalConfig?.ai_available ?? config.aiAvailable ?? false;
 
     if (loading) {
         return (

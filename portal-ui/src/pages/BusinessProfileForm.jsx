@@ -28,8 +28,16 @@ export default function BusinessProfileForm() {
     };
 
     const handleSave = async () => {
-        if (!profile.company_name?.trim()) {
-            setError('Company Name is required before submitting.');
+        const missing = [];
+        for (const [, section] of Object.entries(schema)) {
+            for (const [key, config] of Object.entries(section.fields)) {
+                if (config.required && !profile[key]?.trim()) {
+                    missing.push(config.label);
+                }
+            }
+        }
+        if (missing.length) {
+            setError(`Please fill in required fields: ${missing.join(', ')}`);
             return;
         }
         setSaving(true);

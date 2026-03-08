@@ -8,10 +8,11 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-$token     = sanitize_text_field( wp_unslash( $_GET['contenthub_share'] ) );
-$rest_url  = esc_url( rest_url( 'contenthub-wp/v1/' ) );
-$site_name = get_bloginfo( 'name' );
-$site_icon = get_site_icon_url( 64 );
+$token        = sanitize_text_field( wp_unslash( $_GET['contenthub_share'] ) );
+$rest_url     = esc_url( rest_url( 'contenthub-wp/v1/' ) );
+$site_name    = get_bloginfo( 'name' );
+$site_icon    = get_site_icon_url( 64 );
+$ai_available = ContentHub_Settings::instance()->has_api_key();
 ?>
 <!DOCTYPE html>
 <html <?php language_attributes(); ?>>
@@ -33,6 +34,7 @@ $site_icon = get_site_icon_url( 64 );
             token: <?php echo wp_json_encode( $token ); ?>,
             siteName: <?php echo wp_json_encode( $site_name ); ?>,
             siteIconUrl: <?php echo wp_json_encode( $site_icon ); ?>,
+            aiAvailable: <?php echo wp_json_encode( $ai_available ); ?>,
         };
     </script>
     <script src="<?php echo esc_url( CONTENTHUB_WP_URL . 'portal-ui/build/index.js' ); ?>"></script>
