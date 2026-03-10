@@ -2,7 +2,7 @@
 /**
  * Plugin Name: OBX ContentHub
  * Description: AI-powered content management and Elementor deployment plugin. Scrape, write, or generate content and deploy it to Elementor-built page templates.
- * Version:     1.1.5-beta
+ * Version:     1.1.6-beta
  * Author:      OuterBox
  * Author URI:  https://outerboxdesign.com
  * License:     GPL-2.0-or-later
@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-define( 'CONTENTHUB_WP_VERSION', '1.1.5-beta' );
+define( 'CONTENTHUB_WP_VERSION', '1.1.6-beta' );
 define( 'CONTENTHUB_WP_PATH', plugin_dir_path( __FILE__ ) );
 define( 'CONTENTHUB_WP_URL', plugin_dir_url( __FILE__ ) );
 define( 'CONTENTHUB_WP_MIN_ELEMENTOR_VERSION', '3.0.0' );

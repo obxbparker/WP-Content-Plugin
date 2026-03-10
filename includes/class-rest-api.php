@@ -888,7 +888,7 @@ class ContentHub_REST_API {
 
     public function public_get_portal_config( WP_REST_Request $request ): WP_REST_Response {
         return new WP_REST_Response( [
-            'site_name'     => get_bloginfo( 'name' ),
+            'site_name'     => html_entity_decode( get_bloginfo( 'name' ), ENT_QUOTES, 'UTF-8' ),
             'site_icon_url' => get_site_icon_url( 64 ),
             'ai_available'  => ContentHub_Settings::instance()->has_api_key(),
         ], 200 );

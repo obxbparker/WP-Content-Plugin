@@ -341,47 +341,64 @@ body {
 .portal-tab:hover { color: #1d2327; }
 .portal-tab.is-active { color: #1d2327; border-bottom-color: #1d2327; font-weight: 600; }
 
-/* ── Page Grid ── */
-.portal-page-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 16px;
+/* ── Page List (Hierarchical) ── */
+.portal-page-list {
     margin-top: 20px;
 }
 
-.portal-page-card {
+.portal-page-group {
+    margin-bottom: 4px;
+}
+
+.portal-page-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     background: #fff;
     border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    padding: 20px;
+    border-radius: 6px;
+    padding: 14px 20px;
+    margin-bottom: 2px;
     cursor: pointer;
     transition: border-color 0.15s, box-shadow 0.15s;
 }
 
-.portal-page-card:hover {
+.portal-page-row:hover {
     border-color: #2271b1;
     box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
 
-.portal-page-card h3 { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
-
-.portal-page-card-meta {
+.portal-page-row-title {
     display: flex;
-    gap: 8px;
     align-items: center;
-    margin-bottom: 4px;
+    gap: 8px;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.portal-page-child {
+    margin-left: 28px;
+}
+
+.portal-page-child .portal-page-row-title {
+    font-weight: 500;
+}
+
+.portal-page-indent {
+    color: #a7aaad;
+    font-weight: 400;
+}
+
+.portal-page-row-meta {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-shrink: 0;
 }
 
 .portal-page-card-type {
     font-size: 12px;
     color: #757575;
-    text-transform: capitalize;
-}
-
-.portal-page-card-source {
-    display: block;
-    font-size: 12px;
-    color: #a7aaad;
     text-transform: capitalize;
 }
 
@@ -448,23 +465,13 @@ h2 { font-size: 22px; font-weight: 600; margin-bottom: 8px; }
     transform-origin: 0 0;
 }
 
-.portal-preview-toolbar {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 8px 12px;
-    background: #f6f7f7;
-    border-bottom: 1px solid #e0e0e0;
-}
-
-.portal-btn-sm {
+.portal-preview-disclaimer {
+    padding: 10px 14px;
+    background: #f0f6fc;
+    border-bottom: 1px solid #c3d1e0;
     font-size: 12px;
-    padding: 4px 12px;
-}
-
-.portal-preview-stale {
-    font-size: 12px;
-    color: #996800;
+    color: #50575e;
+    line-height: 1.4;
 }
 
 .portal-preview-loading {

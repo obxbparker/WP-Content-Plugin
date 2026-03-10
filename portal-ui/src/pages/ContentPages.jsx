@@ -2,6 +2,24 @@ import { useState, useEffect } from 'react';
 import { getPages } from '../api/client';
 import StatusBadge from '../components/StatusBadge';
 
+function PageRow({ page, isChild, onEditPage }) {
+    return (
+        <div
+            className={`portal-page-row ${isChild ? 'portal-page-child' : ''}`}
+            onClick={() => onEditPage(page)}
+        >
+            <div className="portal-page-row-title">
+                {isChild && <span className="portal-page-indent">&mdash;</span>}
+                <span>{page.title}</span>
+            </div>
+            <div className="portal-page-row-meta">
+                <span className="portal-page-card-type">{page.template_type || 'Unassigned'}</span>
+                <StatusBadge status={page.content_status} />
+            </div>
+        </div>
+    );
+}
+
 export default function ContentPages({ onEditPage }) {
     const [pages, setPages] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -35,23 +53,30 @@ export default function ContentPages({ onEditPage }) {
         );
     }
 
+    // Build hierarchy: top-level pages and their children
+    const pageIds = new Set(pages.map((p) => p.id));
+    const topLevel = pages.filter(
+        (p) => p.parent_id === 0 || !pageIds.has(p.parent_id)
+    );
+    const childrenOf = (parentId) =>
+        pages.filter((p) => p.parent_id === parentId);
+
     return (
         <div className="portal-pages">
             <h2>Content Pages</h2>
             <p className="portal-subtitle">Select a page to manage its content.</p>
-            <div className="portal-page-grid">
-                {pages.map((page) => (
-                    <div key={page.id} className="portal-page-card" onClick={() => onEditPage(page)}>
-                        <h3>{page.title}</h3>
-                        <div className="portal-page-card-meta">
-                            <span className="portal-page-card-type">{page.template_type || 'Unassigned'}</span>
-                            <StatusBadge status={page.content_status} />
+            <div className="portal-page-list">
+                {topLevel.map((parent) => {
+                    const children = childrenOf(parent.id);
+                    return (
+                        <div key={parent.id} className="portal-page-group">
+                            <PageRow page={parent} isChild={false} onEditPage={onEditPage} />
+                            {children.map((child) => (
+                                <PageRow key={child.id} page={child} isChild={true} onEditPage={onEditPage} />
+                            ))}
                         </div>
-                        {page.content_source && (
-                            <span className="portal-page-card-source">Source: {page.content_source}</span>
-                        )}
-                    </div>
-                ))}
+                    );
+                })}
             </div>
         </div>
     );

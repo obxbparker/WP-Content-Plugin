@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $token        = sanitize_text_field( wp_unslash( $_GET['contenthub_share'] ) );
 $rest_url     = esc_url( rest_url( 'contenthub-wp/v1/' ) );
-$site_name    = get_bloginfo( 'name' );
+$site_name    = html_entity_decode( get_bloginfo( 'name' ), ENT_QUOTES, 'UTF-8' );
 $site_icon    = get_site_icon_url( 64 );
 $ai_available = ContentHub_Settings::instance()->has_api_key();
 ?>
